@@ -1,0 +1,17 @@
+.task-div{
+    
+  
+    
+    border-bottom:3px solid red;
+}
+
+.input-elements{
+    font-size:18px;
+    border:none;
+}
+
+.focused-element{
+
+    border :2px solid green;
+    color:green;
+}
