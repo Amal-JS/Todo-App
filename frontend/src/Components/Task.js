@@ -8,7 +8,10 @@ const Task = (props)=>{
 
 
   const [focused,setFocus] =useState(false)
-  const [task,setTaskId] =useState(props.task)
+  const [taskObject,setTaskObject] =useState(props.task)
+  const [task,setTask] = useState(taskObject.task)
+  const [completed,setCompleted] = useState(taskObject.completed)
+
   const deleteTask = props.deleteTask
   const updateTask =props.updateTask
     
@@ -22,32 +25,29 @@ const Task = (props)=>{
         
     }
 
-    const handleUpdateTask = (event)=>{
+    const handleUpdateTask = ()=>{
 
     const data = {
-            task :document.querySelector('#taskText-'+task.id).value,
-            completed:document.querySelector('#taskDone-'+task.id).checked
+            task :task,
+            completed:completed
         }
 
        
-        updateTask(task.id,data)
+        updateTask(taskObject.id,data)
     }
 
 
     return( 
-        <div className={` p-2 mt-3 task-div ${task.completed ? 'border-0' :'text-dark'} m-2 d-flex justify-content-evenly`} >
+        <div className={` p-2 mt-3 task-div ${taskObject.completed ? 'border-0' :'text-dark'} m-2 d-flex justify-content-evenly`} >
 
             
-{
- task.id === 23 ?
-    console.log(task) : null
-}
+
 
 
                 <div className='d-flex w-75'>
 
 
-                    { task.completed ? 
+                    { taskObject.completed ? 
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" className="bi bi-hand-thumbs-up-fill text-success mt-2" viewBox="0 0 16 16">
                 <path d="M6.956 1.745C7.021.81 7.908.087 8.864.325l.261.066c.463.116.874.456 1.012.965.22.816.533 2.511.062 4.51a9.84 9.84 0 0 1 .443-.051c.713-.065 1.669-.072 2.516.21.518.173.994.681 1.2 1.273.184.532.16 1.162-.234 1.733.058.119.103.242.138.363.077.27.113.567.113.856 0 .289-.036.586-.113.856-.039.135-.09.273-.16.404.169.387.107.819-.003 1.148a3.163 3.163 0 0 1-.488.901c.054.152.076.312.076.465 0 .305-.089.625-.253.912C13.1 15.522 12.437 16 11.5 16H8c-.605 0-1.07-.081-1.466-.218a4.82 4.82 0 0 1-.97-.484l-.048-.03c-.504-.307-.999-.609-2.068-.722C2.682 14.464 2 13.846 2 13V9c0-.85.685-1.432 1.357-1.615.849-.232 1.574-.787 2.132-1.41.56-.627.914-1.28 1.039-1.639.199-.575.356-1.539.428-2.59z"/>
               </svg> 
@@ -59,9 +59,9 @@ const Task = (props)=>{
               </svg>
                 
                 }
-                <input type='checkbox' id={`taskDone-${task.id}`} defaultChecked={task.completed} className='mx-5'></input>
+                <input type='checkbox' id={`taskDone-${taskObject.id}`} defaultChecked={completed} className='mx-5' onChange={(evt)=>setCompleted(evt.target.value)}></input>
 
-                <input type='text'  id={`taskText-${task.id}`}   defaultValue={task.task} className={`input-elements  ${focused ? 'focused-element' :''} ${task.completed ? 'text-success fw-bold ' :'text-dark'} w-75`}  placeholder='default' onFocus={handleFocus} onBlur={handleFocusLeave}></input>
+                <input type='text'  id={`taskText-${taskObject.id}`}   defaultValue={task} className={`input-elements  ${focused ? 'focused-element' :''} ${completed ? 'text-success fw-bold ' :'text-dark'} w-75`}  placeholder='default' onFocus={handleFocus} onBlur={handleFocusLeave} onChange={(evt)=>setTask(evt.target.value)}></input>
 
                 </div>
            
