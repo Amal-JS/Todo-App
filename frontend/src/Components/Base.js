@@ -126,7 +126,7 @@ const Base = () => {
 
                     <div className='d-flex justify-content-center m-5'>
                       {/* onchange the value will be set to the newtask state */}
-                        <input type='text' id='newTask' placeholder=' Add a new task' className='mx-3' defaultValue={newtask} onChange={(evt=> setNewTask(evt.target.value))}></input>
+                        <input type='text' id='newTask' placeholder=' Add a new task' className='mx-3'  value={newtask}  onChange={(evt=> setNewTask(evt.target.value))}></input>
                         <button id='addNewTaskBtn' onClick={addNewTask} className='btn btn-success'>Add</button>
                     </div>
                    </div>
