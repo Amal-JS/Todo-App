@@ -6,14 +6,18 @@ from rest_framework import viewsets
 from rest_framework.response import Response
 
 
+#model view set 
+#CRUD - create , retrieve update partial update and destroy
+# when returning all objects queryset will be send back in serialized form
+
 class TaskViewSets(viewsets.ModelViewSet):
+    # return all objects
     queryset = Task.objects.all()  # Replace Task with your actual model
     serializer_class = TaskSerializer
 
-
+    #post
     def create(self,request):
 
-        print(request, request.data)
         serializer = TaskSerializer(data = request.data)
         if serializer.is_valid():
             serializer.save()
@@ -22,6 +26,7 @@ class TaskViewSets(viewsets.ModelViewSet):
             return Response({'msg':msg})
         return Response(serializer.errors,status=400)
     
+    #get a specafic task - get
     def retrieve(self,request,pk=None):
             
             if pk is not None:
@@ -33,18 +38,13 @@ class TaskViewSets(viewsets.ModelViewSet):
                         return Response({'msg':'Provide a valid id'})
                   return Response(serializer.data)
             
-            # queryset = self.get_queryset()
-            # serializer = self.get_serializer(queryset, many=True)
-            # print(serializer,'  -----   ',serializer.data)
-            # return Response(serializer.data)
-    
-
+          
+    #update the specafic task - put
     def update(self,request,pk=None):
 
         instance = Task.objects.get(pk=pk)
         serializer = TaskSerializer(instance = instance ,data = request.data)
-        print(instance)
-        print('-------------',request.data)
+        
         if serializer.is_valid():
             serializer.save()
             
@@ -53,9 +53,7 @@ class TaskViewSets(viewsets.ModelViewSet):
         return Response(serializer.errors,status=400)
         
     
-
-    def partial_update(self,request,pk=None):
-            return Response({'msg':'Response from partial_update method'})
+    #delete
     def destroy(self,request,pk=None):
             
         if pk is not None:
